@@ -3,14 +3,18 @@
 
 define([
   'backbone',
-  'views/listview',
-  'views/addview',
-  'views/updateview'
-], function (Backbone, ListView, AddView, UpdateView) {
+  'views/listframeworksview',
+  'views/listtagsview',
+  'views/addframeworkview',
+  'views/addtagview',
+  'views/updateframeworkview'
+], function (Backbone, ListFrameworksView, ListTagsView, AddFrameworkView, AddTagView, UpdateFrameworkView) {
 
-  var listView = new ListView(),
-    addView = new AddView(),
-    updateView = new UpdateView();
+  var listFrameworksView = new ListFrameworksView(),
+    listTagsView = new ListTagsView(),
+    addFrameworkView = new AddFrameworkView(),
+    addTagView = new AddTagView(),
+    updateFrameworkView = new UpdateFrameworkView();
 
   var Router = Backbone.Router.extend({
     routes: {
@@ -18,14 +22,16 @@ define([
       '*actions': 'index'
     },
     initialize: function () {
-      listView.render();
-      addView.render();
+      listFrameworksView.render();
+      listTagsView.render();
+      addFrameworkView.render();
+      addTagView.render();
     },
     index: function () {
-      updateView.hide();
+      updateFrameworkView.hide();
     },
     update: function (id) {
-      updateView.render(id);
+      updateFrameworkView.render(id);
     }
   });
 

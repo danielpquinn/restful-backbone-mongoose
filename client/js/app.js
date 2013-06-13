@@ -3,17 +3,23 @@
 
 define([
   'jquery',
+  'underscore',
   'backbone',
   'handlebars',
   'collections/frameworks',
-  'bootstrap'
-], function ($, Backbone, Handlebars, FrameworkCollection) {
+  'collections/tags',
+  'bootstrap',
+  'backbone-relational'
+], function ($, _, Backbone, Handlebars, FrameworkCollection, TagCollection) {
 
   'use strict';
 
   var App = {
-    collection: new FrameworkCollection()
+    frameworkCollection: new FrameworkCollection(),
+    tagCollection: new TagCollection()
   };
+
+  _.extend(App, Backbone.Events);
 
   return App;
 

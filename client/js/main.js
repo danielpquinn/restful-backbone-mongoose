@@ -4,13 +4,17 @@
 require.config({
   paths: {
     'jquery': 'lib/jquery',
-    'underscore': 'lib/lodash',
+    'underscore': 'lib/underscore',
     'bootstrap': 'lib/bootstrap',
     'backbone': 'lib/backbone',
+    'backbone-relational': 'lib/backbone-relational',
     'text': 'lib/text',
     'handlebars': 'lib/handlebars'
   },
   shim: {
+    'underscore': {
+      exports: '_'
+    },
     'handlebars': {
       exports: 'Handlebars'
     },
@@ -19,6 +23,11 @@ require.config({
         'underscore'
       ],
       exports: 'Backbone'
+    },
+    'backbone-relational': {
+      deps: [
+        'backbone'
+      ]
     },
     'bootstrap': {
       deps: [
@@ -55,13 +64,24 @@ require([
     }
   });
 
+  // Start history after all fetches finish
+  var afterFetch = _.after(2, function () {
+    Backbone.history.start({pushState: true});
+  });
 
   App.router = new Router();
 
-  App.collection.fetch({
+  App.frameworkCollection.fetch({
     reset: true,
     success: function () {
-      Backbone.history.start({pushState: true});
+      afterFetch();
+    }
+  });
+
+  App.tagCollection.fetch({
+    reset: true,
+    success: function () {
+      afterFetch();
     }
   });
 

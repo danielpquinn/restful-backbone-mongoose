@@ -2,10 +2,12 @@
 /*jslint sloppy: true, indent: 2 */
 
 define([
-  'backbone'
-], function (Backbone) {
+  'backbone',
+  'models/tag',
+  'backbone-relational'
+], function (Backbone, TagModel) {
 
-  var FrameworkModel = Backbone.Model.extend({
+  var FrameworkModel = Backbone.RelationalModel.extend({
     idAttribute: '_id',
     urlRoot: '/api/frameworks',
     defaults: {
@@ -19,7 +21,17 @@ define([
           return true;
         }
       }
-    }
+    },
+    relations: [{
+      type: 'HasMany',
+      key: 'tags',
+      relatedModel: TagModel,
+      reverseRelation: {
+        key: '_id',
+        includeInJSON: '_id'
+
+      }
+    }]
   });
 
   return FrameworkModel;
